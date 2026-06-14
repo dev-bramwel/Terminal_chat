@@ -1,0 +1,7 @@
+# Ignore internal Go tracking logs and OS junk
+*.out
+*.prof
+.DS_Store
+
+# Binaries
+/net-cat
