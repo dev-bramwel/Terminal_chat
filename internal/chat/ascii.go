@@ -1,4 +1,4 @@
-package ascii
+package chat
 
 // GetLinuxLogo returns the mandatory welcome visual interface string
 func GetLinuxLogo() string {
