@@ -1,9 +1,9 @@
-package main
+package config
 
 import (
 	"errors"
-	"fmt"
-	"os"
+	//"fmt"
+	//"os"
 ) 
 // Config holds the application configuration
 type Config struct {
