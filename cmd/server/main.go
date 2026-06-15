@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"tcpchat/internal/chat"
-	"tcpchat/pkg/config"
+	"net/internal/chat"
+	"net/pkg/config"
 )
 
 func main() {
