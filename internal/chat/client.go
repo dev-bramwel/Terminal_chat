@@ -25,3 +25,43 @@ type Client struct {
 //func  NewClient  will create a new Client and prepares them for chatting.
 // This is called every time a new person connects to our server.
 //
+func NewClient(conn net.Conn, server *Server) *Client {
+	
+	return &Client{
+		conn:    conn,               // Save the connection
+		server:  server,             // Save the server reference
+		ch:      make(chan string, 100), // Create their message inbox
+		scanner: bufio.NewScanner(conn),  // Set up a scanner to read their messages
+		writer:  bufio.NewWriter(conn),   // Set up a writer to send messages to them
+	}
+}
+
+func (c *Client) Read() {
+	// for c.scanner.Scan() loops until the client disconnects.
+	// scanner.Scan() reads one line of text and returns true if successful.
+	// When the client closes their terminal or types Ctrl+C, it returns false.
+	for c.scanner.Scan() {
+		// .Text() gets the line they typed (as a string).
+		msg := strings.TrimSpace(c.scanner.Text())
+
+		
+		if msg == "" {
+			continue // Skip to the next message
+		}
+
+		// Check if this is a special command (like /name).
+		// Commands start with "/" and do special actions instead of normal chatting.
+		if strings.HasPrefix(msg, "/") {
+			c.handleCommand(msg) // Process the command (like changing name)
+			continue             // Don't broadcast commands as regular messages
+		}
+
+		// Broadcast the message to all other clients in the chat.
+		// c.server.broadcast does the heavy lifting of sending it to everyone else.
+		c.server.broadcast(msg, c)
+	}
+
+	// If we reach this line, the client disconnected (closed their terminal).
+	// We tell the server to clean up and notify others.
+	c.server.removeClient(c)
+}
