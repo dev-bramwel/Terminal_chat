@@ -1,4 +1,3 @@
-```makefile
 # Project name
 APP_NAME := TCPChat
 
@@ -136,4 +135,3 @@ help:
 	@echo "  make rebuild      Clean and build again"
 	@echo "  make tidy         Clean up go.mod and go.sum"
 	@echo "  make tree         Show project structure"
-```
