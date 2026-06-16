@@ -109,8 +109,7 @@ func (s *Server) Broadcast(message Message, sender *Client) {
 	s.mu.Unlock()
 
 	for _, client := range clients {
-		client.WriteLine("\n" + message.Format())
-		client.Write(Prompt(client.Name()))
+		client.Write("\n" + message.Format() + Prompt(client.Name()))
 	}
 }
 
