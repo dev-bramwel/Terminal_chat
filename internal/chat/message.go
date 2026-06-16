@@ -1,26 +1,53 @@
 package chat
 
-// "fmt" - For formatting text (like "[2024-01-20][Name]: Hello, world!")
-// "time" - For getting the current date and time (when messages were sent)
 import (
-	"fmt"  // Combines text and variables into formatted strings
-	"time" // Gets current time and formats it nicely
+	"fmt"
+	"time"
 )
 
-func FormatMessage(sender string, msg string) string {
-	
-	timestamp := time.Now().Format("2006-01-02 15:04:05")
+type Message struct {
+	Sender   string
+	Text     string
+	Time     time.Time
+	IsSystem bool
+}
 
-	
-	return fmt.Sprintf("[%s][%s]: %s\n", timestamp, sender, msg)
+func NewChatMessage(sender string, text string) Message {
+	return Message{
+		Sender: sender,
+		Text:   text,
+		Time:   time.Now(),
+	}
+}
+
+func NewSystemMessage(text string) Message {
+	return Message{
+		Sender:   "System",
+		Text:     text,
+		Time:     time.Now(),
+		IsSystem: true,
+	}
+}
+
+func (m Message) Format() string {
+	if m.IsSystem {
+		return formatWithTime(m.Time, "System", m.Text)
+	}
+	return formatWithTime(m.Time, m.Sender, m.Text)
+}
+
+func FormatMessage(sender string, msg string) string {
+	return NewChatMessage(sender, msg).Format()
 }
 
 func FormatSystemMessage(msg string) string {
-	// Same timestamp logic as FormatMessage.
-	// Every message (system or user) gets the same timestamp format.
-	timestamp := time.Now().Format("2006-01-02 15:04:05")
+	return NewSystemMessage(msg).Format()
+}
 
-	
-	
-	return fmt.Sprintf("[%s][System]: %s\n", timestamp, msg)
+func Prompt(sender string) string {
+	return fmt.Sprintf("[%s][%s]: ", time.Now().Format("2006-01-02 15:04:05"), sender)
+}
+
+func formatWithTime(t time.Time, sender string, text string) string {
+	return fmt.Sprintf("[%s][%s]: %s\n", t.Format("2006-01-02 15:04:05"), sender, text)
 }
