@@ -11,11 +11,11 @@ import (
 const MaxClients = 10
 
 type Server struct {
-	port     string 			// port number
-	clients  map[*Client]bool	// means that a specific client exists in the chat right now
-	history  []Message 			// slice because messeges happen in order
-	joinChan chan net.Conn 		// channel carries new network connections. used because Go channels are designed for communication between goroutines.
-	mu       sync.Mutex			// This protects shared data by preventing race conditions
+	port     string           // port number
+	clients  map[*Client]bool // means that a specific client exists in the chat right now
+	history  []Message        // slice because messeges happen in order
+	joinChan chan net.Conn    // channel carries new network connections. used because Go channels are designed for communication between goroutines.
+	mu       sync.Mutex       // This protects shared data by preventing race conditions
 }
 
 func NewServer(port string) *Server {
