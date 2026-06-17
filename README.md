@@ -1,5 +1,3 @@
-Here is your updated `README.md` content, incorporating instructions for remote client connections, the breakdown of how concurrency is managed, and details on changing user names.
-
 ```markdown
 # Net-Cat: TCP Chat Server
 
@@ -7,9 +5,9 @@ Net-Cat is a TCP chat server written in Go. It allows multiple users to connect 
 
 ## Authors
 
-- [Moses Amani]
-- [Margaret Apiyo]
-- [Bramwel Mutugi]
+- Moses Amani
+- Margaret Apiyo
+- Bramwel Mutugi
 
 ## Project Structure
 
